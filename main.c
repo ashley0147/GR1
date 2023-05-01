@@ -14,15 +14,21 @@ int readFile(char *filename)
         exit(1);
     }
     char str[100];
+    //read 2 lines
     for (int i = 0; i < 2; i++)
     {
         fgets(str, 100, fptr);
     }
-
+    
     int f, t, nodes, edges;
-    scanf(fptr, "# %s %d %s %d", str, &nodes, str, &edges);
-    printf("%d,%d", nodes, edges) while (!feof(fptr));
+    // read number of nodes and edges
+    fscanf(fptr, "# %s %d %s %d", str, &nodes, str, &edges);
+    printf("%d,%d", nodes, edges);
+
+    for (int i = 0; i < edges; i++)
     {
+        fscanf(fptr, "%d %d", &f, &t);
+        printf("%d,%d", f, t)
     }
     fclose(fptr);
     return 1;
