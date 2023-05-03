@@ -36,6 +36,14 @@
   "C_Cpp_Runner.useAddressSanitizer": false,
   "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
-    "graph.h": "c"
+    "graph.h": "c",
+    "queue.h": "c",
+    "stdio.h": "c",
+    "vector.h": "c",
+    "string.h": "c",
+    "*.tcc": "c",
+    "deque": "c",
+    "string": "c",
+    "vector": "c"
   }
 }

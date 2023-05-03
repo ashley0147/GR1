@@ -1,24 +1,17 @@
 #include <stdio.h>
 #include "graph.h"
+#include "vector.h"
 
-Node *createNode(int vertex)
+Graph *createGraph(int numberOfVertice)
 {
-    Node *newNode = malloc(sizeof(Node));
-    newNode->vertex = vertex;
-    newNode->next = NULL;
-    return newNode;
-}
-
-Graph *createGraph(int verticeNumber)
-{
-    Graph *graph = malloc(sizeof(Graph));
-    graph->numVertices = verticeNumber;
-    graph->adjLists = malloc(verticeNumber * sizeof(Node *));
-    graph->visited = malloc(vertices * sizeof(int));
-
-    for (int i = 0; i < verticeNumber; i++)
+    Graph *graph = (Graph *)malloc(sizeof(Graph));
+    graph->numVertices = numberOfVertice;
+    graph->adjLists = (vector **)malloc(numberOfVertice * sizeof(vector *));
+    graph->visited = (int *)malloc(numberOfVertice * sizeof(int));
+    printf("init v");
+    for (int i = 0; i < numberOfVertice; i++)
     {
-        graph->adjLists[i] = NULL;
+        graph->adjLists[i] = create_vector();
         graph->visited[i] = 0;
     }
 
@@ -27,42 +20,64 @@ Graph *createGraph(int verticeNumber)
 
 void addEdge(Graph *graph, int src, int dest)
 {
-    Node *newNode = createNode(dest);
-    newNode->next = graph->adjList[src];
-    graph->adjLists[src] = newNode;
-    newNode = createNode(src);
-    newNode->next = graph->adjLists[dest];
-    graph->adjLists[dest] = newNode;
+    printf("from %d to %d", src, dest);
+    push_back(graph->adjLists[src], dest);
+    // vector_pushback(graph->adjLists[dest], src);
 }
 
-void bfs(Graph *graph, int startVertex)
-{
+// void bfs(Graph *graph, int startVertex)
+// {
+//     vector *q = create_vector();
+//     graph->visited[startVertex] = 1;
+//     vector_pushback(q, startVertex);
+//     int currentVertext = startVertex;
+//     int count = 0;
+//     while (q->total != 0)
+//     {
+//         // printQueue(q);
+//         int currentVertext = (int)vector_front(q);
+//         printf("Visited %d\n", currentVertext);
+//         // get list of adjacent vertices
+//         vector *temp = graph->adjLists[currentVertext];
 
-    // create queue for holding visited vertex
-    Queue *q = createQueue();
-    // set startVertex to visited ( 1 = visited / 0 = not visited)
-    graph->visited[startVertex] = 1;
-    // enqueue visited vertex to the queue, in this case startVertex has been visited
-    enqueue(q, startVertex);
+//         for (int i = 0; i < temp->total; i++)
+//         {
+//             int adjVertex = vector_get(temp, i);
+//             if (graph->visited[adjVertex] == 0)
+//             {
+//                 graph->visited[adjVertex] = 1;
+//                 vector_pushback(q, adjVertex);
+//                 // printf("enqueue %d\n", adjVertex);
+//             }
+//         }
+//         // free(temp);
+//     }
+//     printf("Traversed all nodes have connection to %d", startVertex);
+// }
 
-    // loop until queue is empty
-    while (!isEmpty(q))
-    {
-        printQueue(q);
-        int currentVertext = dequeue(q);
-        printf("Visited %d\n", currentVertext);
-        // get list of adjacent vertices
-        Node *temp = graph->adjLists[currentVertext];
+// void dfs(Graph *g, int v)
+// {
+//     Node *temp = g->adjLists[v];
+//     g->visited[v] = 1;
+//     printf("Visited %d \n", v);
+//     while (temp != NULL)
+//     {
+//         int adjVertex = temp->vertex;
+//         if (g->visited[adjVertex] == 0)
+//         {
+//             dfs(g, adjVertex);
+//         }
+//         temp = temp->next;
+//     }
+// }
 
-        while (temp)
-        {
-            int adjVertex = temp->vertex;
-            if (graph->visited[adjVertex] == 0)
-            {
-                graph->visited[adjVertex] = 1;
-                enqueue(q, adjVertex);
-            }
-            temp = temp->next;
-        }
-    }
-}
+// void dfsAll(Graph *g)
+// {
+//     for (int i = 0; i < g->numVertices; i++)
+//     {
+//         if (g->visited[i] == 0)
+//         {
+//             dfs(g, i);
+//         }
+//     }
+// }

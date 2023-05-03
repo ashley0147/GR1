@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "graph.h"
+#include "graph.c"
 
 Graph *readFile(const char *filename)
 {
@@ -39,6 +39,12 @@ Graph *readFile(const char *filename)
 
 int main()
 {
-    readFile("./data/roadNet-CA.txt");
+
+    Graph *newGraph = readFile("./data/roadNet-CA.txt");
+
+    // bfs(newGraph, 0);
+
+    // dfs(newGraph, 0);
+    // dfsAll(newGraph);
     return 0;
 }
