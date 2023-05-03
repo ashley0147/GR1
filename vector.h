@@ -20,6 +20,10 @@ void resize(vector *v, int size);
 void push_back(vector *v, int value);
 int size(vector *v);
 int pop_back(vector *v);
+int vector_get(vector *v, int index);
+int pop_front(vector *v);
+int vector_front(vector *v);
+void vector_delete(vector *v, int index);
 
 // int operator[](vector *v, const int i)
 // {
@@ -64,6 +68,10 @@ void resize(vector *v, int size)
 //     for (int i = 0; i < size; i++)
 //         array_data_[i] = default_value;
 // }
+int vector_front(vector *v)
+{
+    return vector_get(v, 0);
+}
 void push_back(vector *v, int value)
 {
     if (v->capacity_ > v->size_)
@@ -87,5 +95,34 @@ int pop_back(vector *v)
 {
     v->size_--;
     return v->array_data_[v->size_];
+}
+int vector_get(vector *v, int index)
+{
+    if (index >= 0 && index < v->size_)
+        return v->array_data_[index];
+    return -1;
+}
+
+void vector_delete(vector *v, int index)
+{
+    if (index < 0 || index >= v->size_)
+        return;
+    v->array_data_[index] = -1;
+    int i;
+    for (i = 0; i < v->size_ - 1; i++)
+    {
+        v->array_data_[i] = v->array_data_[i + 1];
+        v->array_data_[i + 1] = -1;
+    }
+
+    v->size_--;
+    if (v->size_ > 0 && v->size_ == v->capacity_ / 4)
+        re_capacity(v, v->capacity_ / 2);
+}
+int pop_front(vector *v)
+{
+    int item = vector_front(v);
+    vector_delete(v, 0);
+    return item;
 }
 #endif
